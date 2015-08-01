@@ -1,5 +1,55 @@
-extends layout
-
-block content
-  h1= title
-  p Welcome to STEVIE'S HOUSE #{title}
+doctype html(lang='en')
+head
+	meta(charset='utf-8')
+	script(src='/javascripts/jquery.js')
+	script(src='/javascripts/bootstrap.min.js')
+	link(rel="stylesheet" href='/stylesheets/bootstrap.min.css')
+	link(rel="stylesheet" type="text/css" href='/stylesheets/style.css')
+	link(rel="stylesheet" href='/stylesheets/fancyInput.css')
+body(style="font-size:100%")
+	#map
+	nav.navbar.navbar-default.navbar-fixed-top
+		.container-fluid
+			// Brand and toggle get grouped for better mobile display
+			.navbar-header
+				a.navbar-brand(href='#' style="padding:0px")
+					img(alt="logo" src="/images/black_transparent_logo.png" style="height:100%")
+			// Collect the nav links, forms, and other content for toggling
+			#bs-example-navbar-collapse-1.collapse.navbar-collapse
+				ul.nav.navbar-nav
+					li
+						a(href='#')
+							| Blogs
+							span.sr-only (current)i
+					li
+						a(href='#') Search
+				ul.nav.navbar-nav.navbar-right
+					li.dropdown
+						a.dropdown-toggle(href='#', data-toggle='dropdown', role='button', aria-haspopup='true', aria-expanded='false')
+							| Options
+							span.caret
+						ul.dropdown-menu
+							li
+								a(href='#') Action
+							li
+								a(href='#') Another action
+							li
+								a(href='#') Something else here
+							li.divider(role='separator')
+							li
+								a(href='#') Separated link
+							li.divider(role='separator')
+							li
+								a(href='#') One more separated link
+	section(class='input' style="position:absolute;width:100%;top:55%;height:13%;font-size:100%")
+		div(style="width:50%;height:100%;font-size:5em")
+			input(type="text" placeholder="Search schools..." style="height:100%")
+	section(class='input' style="position:absolute;width:100%;top:35%;height:13%;font-size:100%")
+		div(style="width:50%;height:100%;font-size:5em")
+			input(type="text" placeholder="I'm from..." style="height:100%")
+	script(src='/javascripts/d3.js')
+	script(src='/javascripts/topojson.js')
+	script(src='/javascripts/map.js')
+	script(src='/javascripts/fancyInput.js')
+	script.
+		$('div :input').fancyInput();

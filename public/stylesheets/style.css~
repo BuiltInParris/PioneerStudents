@@ -1,0 +1,38 @@
+body {
+  font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
+}
+
+a {
+  color: #00B7FF;
+}
+
+#map {
+        background-color: #7FC6BC;
+        border: 1px solid #ccc;
+}
+.background {
+        fill: none;
+        pointer-events: all;
+}
+#countries, #states {
+        fill: #B5E655;
+        stroke: #B5E655;
+        stroke-linejoin: round;
+        stroke-linecap: round;
+}
+#countries .active, #states .active {
+        fill: #96CA2D;
+}
+#cities {
+        stroke-width: 0;
+}
+.city {
+        fill: #fff;
+        stroke: #345;
+}
+pre.prettyprint {
+        border: 1px solid #ccc;
+        margin-bottom: 0;
+        padding: 9.5px;
+}
+

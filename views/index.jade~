@@ -1,0 +1,15 @@
+doctype html(lang='en')
+head
+	meta(charset='utf-8')
+	script(src='/javascripts/jquery.js')
+	link(rel="stylesheet" type="text/css" href='/stylesheets/style.css')
+	body
+		form(name="theForm" style="position:absolute;top:50%;left:50%;-webkit-transform: translate(-50%, -50%);-moz-transform: translate(-50%, -50%);-ms-transform: translate(-50%, -50%);-o-transform: translate(-50%, -50%);transform: translate(-50%, -50%);")
+			center
+				input(type="text")
+		#map
+	script(src='/javascripts/d3.js')
+	script(src='/javascripts/topojson.js')
+	script(src='/javascripts/map.js')
+	script.
+		$('div :input').fancyInput();

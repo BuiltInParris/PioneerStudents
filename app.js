@@ -10,6 +10,36 @@ var users = require('./routes/users');
 
 var app = express();
 
+/*
+var mysql = require('mysql');
+
+var connection = mysql.createConnection({
+	host : "localhost",
+	user : "root",
+	password : "sparris123"
+});
+
+connection.connect();
+
+connection.query("use PioneerStudents");
+var strQuery = "SELECT * FROM test";
+//var strQuery = "INSERT INTO test (col1) VALUES('mayhaps');";
+
+connection.query(strQuery, function(err, rows){
+	if(err){
+		throw err;
+	}
+	else
+	{
+		console.log(rows)
+	}
+});*/
+
+
+
+
+
+
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'jade');
@@ -55,6 +85,5 @@ app.use(function(err, req, res, next) {
     error: {}
   });
 });
-
 
 module.exports = app;

@@ -168,12 +168,14 @@ a {
 }
 
 #cities {
-        stroke-width: 0;
+        /*stroke-width: 0;*/
 }
 
 .city {
-        fill: #fff;
+        /*fill: #fff;
         stroke: #345;
+*/	background-image: url('../images/test.jpg');
+	background-size: contain;
 }
 
 pre.prettyprint {

@@ -2,15 +2,27 @@ var express = require('express');
 var router = express.Router();
 var mysql = require('mysql');
 var fs = require('fs');
+var http = require('http');
+var path = require('path');
 //window.$ = window.jQuery = require('jquery');
 //global.jQuery = require('jquery');
 //var bootstrap = require('bootstrap');
 
-
+router.get('/addUser', function(req, res, next){
+/*	fs.readFile(req.files.displayImage.path, function (err, data) {
+		// ...
+		var newPath = __dirname + "/uploads/uploadedFileName";
+		fs.writeFile(newPath, data, function (err) {
+		res.redirect("back");
+	});
+});*/
+	res.render('addUser', { title: 'Pioneer Students' });
+});
 
 /* GET home page. */
 router.get('/', function(req, res, next) {
-	
+
+	/*	
 	//Convert latitude and longitude to coordinates for the map
 	var latitude = 39.9491;
 	var longitude = 75.1606;
@@ -22,6 +34,25 @@ router.get('/', function(req, res, next) {
         var specialLongitude = Math.abs((longitude+longTrans)/longScale);
         var specialLatitude = (latitude-latTrans)/latScale;
         //console.log("Longitude:" + specialLongitude + ", Latitude:" + specialLatitude);
+	
+
+	
+	var options = {host:'https://maps.googleapis.com/maps/api/geocode/json?address=1600+Amphitheatre+Parkway,+Mountain+View,+CA&key=AIzaSyBkL_7hj4jZVeDJS0TDy1sdME8DOXG_diI'}
+	
+
+	var geocoder;
+	var map;
+	  geocoder = new google.maps.Geocoder();
+	  var address = document.getElementById('address').value;
+	  geocoder.geocode( { 'address': address}, function(results, status) {
+	    if (status == google.maps.GeocoderStatus.OK) {
+	      map.setCenter(results[0].geometry.location);
+		console.log('mabes');
+	    } else {
+	      alert('Geocode was not successful for the following reason: ' + status);
+	    }
+	  });
+
 
 
 	//Read in the usa cities json (for eventual writing)
@@ -30,7 +61,7 @@ router.get('/', function(req, res, next) {
 			return console.log(err);
 		}
 		var json_obj = JSON.parse(data);
-	        console.log(json_obj.objects.cities.geometries);
+	        //console.log(json_obj.objects.cities.geometries);
 	});
 
 	//SQL QUERYING
@@ -56,8 +87,8 @@ router.get('/', function(req, res, next) {
 			console.log(rows)
         	}
 	});
+	*/
 	res.render('index', { title: 'Pioneer Students' });
-
 });
 
 module.exports = router;

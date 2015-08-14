@@ -1,35 +1,47 @@
 html
-	head
-		h1 User Creation
-	body
-		div(class='well col-md-6')
+	body(style="background-image: url('images/addUserBackground.jpg');background-position:center")
+		div(style='margin:15px')
+			h1(style='text-align:center;color:white') Super Nifty User Creation
 			br
-			.input-group
-				span#basic-addon1.input-group-addon Username: 
-				input.form-control(type='text', placeholder='Username', aria-describedby='basic-addon1')
-			.input-group
-				span#basic-addon1.input-group-addon City:
-				input#geocomplete.form-control(type='text', placeholder='City', aria-describedby='basic-addon1')
-			.input-group
-				span#basic-addon1.input-group-addon First Name:
-				input.form-control(type='text', placeholder='First Name', aria-describedby='basic-addon1')
-			.input-group
-				span#basic-addon1.input-group-addon Last Name:
-				input.form-control(type='text', placeholder='Last Name', aria-describedby='basic-addon1')
-			input(class="btn btn-default" type="submit" value="Submit")
-		div(class='well col-md-6')
-			h4 Upload Image:
-			form(action="api/photos", method="post", enctype="multipart/form-data", class="dropzone")
-				input(type="file", name="userPhoto")
+			div(class='col-md-5')
+				.well(style="background-color: rgba(78, 93,108,0.5);")
+					h3(style="color:white;text-align:center") User Information:
+					br
+					.input-group
+						span#basic-addon1.input-group-addon Username: 
+						input.form-control(type='text', placeholder='Username', aria-describedby='basic-addon1')
+					br
+					.input-group
+						span#basic-addon1.input-group-addon City:
+						input#geocomplete.form-control(type='text', placeholder='City', aria-describedby='basic-addon1')
+					br
+					.input-group
+						span#basic-addon1.input-group-addon First Name:
+						input.form-control(type='text', placeholder='First Name', aria-describedby='basic-addon1')
+					br
+					.input-group
+						span#basic-addon1.input-group-addon Last Name:
+						input.form-control(type='text', placeholder='Last Name', aria-describedby='basic-addon1')
+					br
+					input(class="btn btn-default" type="submit" value="Submit")
+			div(class='col-md-5 col-md-offset-2' style="color:#333;")
+				.well(style="background-color: rgba(78, 93,108,0.5);")
+					h3(style="color:white;text-align:center") Image:
+					#simpleUpload
+						.meter
+							span.roller
+						#dropzone
+						form#my-dropzone.dropzone(action='/upload')
+link(rel="stylesheet" type="text/css" href='/stylesheets/bootstrap.min.css')
+link(rel="stylesheet" type="text/css" href='/stylesheets/bootstrap.theme.min.css')
+link(rel="stylesheet" type="text/css" href='/stylesheets/dropzone.css')
 script(src='/javascripts/jquery.js')
 script(src='/javascripts/bootstrap.min.js')
 script(src='/javascripts/jquery.geocomplete.js')
-link(rel="stylesheet" type="text/css" href='/stylesheets/bootstrap.min.css')
-link(rel="stylesheet" type="text/css" href='/stylesheets/style.css')
-link(red="stylesheet" type="text/css" href='/stylesheets/dropzone.css')
+script(src='/javascripts/dropzone.js')
+script(src='/javascripts/dropzoneopts.js')
 script(src="http://maps.googleapis.com/maps/api/js?sensor=false&libraries=places")
 script.
 	$(function(){
 		$("#geocomplete").geocomplete()
 	});
-script(src='/javascripts/dropzone.js')

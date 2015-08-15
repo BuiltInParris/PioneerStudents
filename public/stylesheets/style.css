@@ -7,6 +7,31 @@ body {
 	height:100%;
 	text-align:center;
 }
+.buttonSearchDiv{
+	position:absolute;
+	top:80%;
+	text-align:center;
+	width:100%;
+}
+#invis{
+	display:none;
+}
+
+#searchbutton{
+	background-color: #202020;
+}
+
+.logoImg{
+	height:30%;
+	width:30%;
+	top:20%;
+	position:absolute;
+	left:0;
+	right:0;
+	margin-left:auto;
+	margin-right:auto;
+}
+
 div.slideDown {
 	animation-duration: 3s;
 	animation-name: slideDown;
@@ -42,14 +67,14 @@ section.searchbox2 {
 section.hiddensearchbox1 {
         position:absolute;
         width:100%;
-        top:-30%;
+        top:-40%;
         height:13%;
         font-size:100%;
 }
 section.hiddensearchbox2 {
         position:absolute;
         width:100%;
-        top:-10%;
+        top:-20%;
         height:13%;
         font-size:100%;
 }
@@ -73,13 +98,13 @@ div.searchdiv {
 
 @keyframes slideUp {
         0% {
-                transform: translateY(500%);
+                transform: translateY(575%);
         }
 }
 
 @-webkit-keyframes slideUp {
         0% {
-                -webkit-transform: translateY(500%);
+                -webkit-transform: translateY(575%);
         }
 }
 
@@ -139,7 +164,7 @@ header{ position:absolute; z-index:999; top:0; left:0; width:100%; padding:10px 
         #content section{ width:50%; height:100%; float:left; }
         #content section::before{ content:''; display:inline-block; height:100%; vertical-align:middle; }
 
-.fancyInput{ max-width:80%; min-width:50%; font-size:60px; color:#FFF; vertical-align:middle; line-height:1.3; overflow:hidden; text-align:left; box-shadow:0 1px 0 rgba(255,255,255,.15), 0 2px 4px rgba(0,0,0,.2) inset, 0 0 12px rgba(255,255,255,.1); padding:8px 20px; background:rgba(0,0,0,.1); border-radius:10px; }
+.fancyInput{ max-width:80%; min-width:50%; font-size:60px; color:#FFF; vertical-align:middle; line-height:1.3; overflow:hidden; text-align:left; box-shadow:0 1px 0 rgba(255,255,255,.15), 0 2px 4px rgba(0,0,0,.2) inset, 0 0 12px rgba(255,255,255,1); padding:8px 20px; background:rgba(0,0,0,1); border-radius:10px; }
 .fancyInput.textarea{ line-height:normal; font-size:40px; max-width:50%; min-height:160px; max-height:40%; }
 
 
@@ -152,30 +177,28 @@ a {
 }
 
 .background {
-        fill: none;
+        fill: #A3D9A3;
         pointer-events: all;
 }
 
 #countries, #states {
         fill: #449d44;
-        stroke: #FFFFFF;
+        stroke: #085808;
         stroke-linejoin: round;
         stroke-linecap: round;
 }
 
 #countries .active, #states .active {
-        fill: #96CA2D;
+        fill: #71BE71;
 }
 
 #cities {
-        /*stroke-width: 0;*/
+        stroke-width: 0.05px;
 }
 
 .city {
-        /*fill: #fff;
-        stroke: #345;
-*/	background-image: url('../images/test.jpg');
-	background-size: contain;
+        stroke: #6D0A0A;
+	stroke-width: 0.05px;
 }
 
 pre.prettyprint {

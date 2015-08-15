@@ -8,7 +8,7 @@ Dropzone.options.myDropzone = {
     self.options.dictRemoveFile = "Delete";
 
     // load already saved files
-    $.get('/upload', function(data) {
+    $.get('/upload_image', function(data) {
       var files = JSON.parse(data).files;
       for (var i = 0; i < files.length; i++) {
 

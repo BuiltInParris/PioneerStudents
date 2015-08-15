@@ -1,7 +1,7 @@
 var searchClicked = false;
 var firstTime = true;
 $('#searchButton').click(function(){
-	if(searchClicked == false){
+	if($("#searchbox1").attr('class') != 'searchbox1'){
 		searchClicked = true;
 		$(".textholder").remove();
 		$("#search").css('display','inherit');

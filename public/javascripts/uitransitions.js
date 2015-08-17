@@ -13,7 +13,6 @@ $('#searchButton').click(function(){
 	}
 	else
 	{
-		console.log('eh')
 		searchClicked = false;
 		//$("#search").css('display','none');
 		$("#searchbox1").attr("class","hiddensearchbox1");

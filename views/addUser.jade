@@ -7,22 +7,26 @@ html
 				.well(style="background-color: rgba(78, 93,108,0.5);")
 					h3(style="color:white;text-align:center") User Information:
 					br
-					.input-group
-						span#basic-addon1.input-group-addon Username: 
-						input.form-control(type='text', placeholder='Username', aria-describedby='basic-addon1')
-					br
-					.input-group
-						span#basic-addon1.input-group-addon City:
-						input#geocomplete.form-control(type='text', placeholder='City', aria-describedby='basic-addon1')
-					br
-					.input-group
-						span#basic-addon1.input-group-addon First Name:
-						input.form-control(type='text', placeholder='First Name', aria-describedby='basic-addon1')
-					br
-					.input-group
-						span#basic-addon1.input-group-addon Last Name:
-						input.form-control(type='text', placeholder='Last Name', aria-describedby='basic-addon1')
-					br
+					form(action='/createuser', method='POST')
+						.input-group
+							span#basic-addon1.input-group-addon Username: 
+							input.form-control(type='text', pattern="^[0-9a-zA-Z]+$",placeholder='Username', name='username', aria-describedby='basic-addon1')
+						br
+						.input-group
+							span#basic-addon1.input-group-addon City:
+							input#geocomplete.form-control(type='text', placeholder='City', name='city', aria-describedby='basic-addon1')
+						br
+						.input-group
+							span#basic-addon1.input-group-addon First Name:
+							input.form-control(type='text', placeholder='First Name', name='firstname', aria-describedby='basic-addon1')
+						br
+						.input-group
+							span#basic-addon1.input-group-addon Last Name:
+							input.form-control(type='text', placeholder='Last Name', name='lastname', aria-describedby='basic-addon1')
+						br
+						center
+							input(class="btn btn-default" type="submit" value="Submit" action='/newuser')
+
 			div(class='col-md-5 col-md-offset-2' style="color:#333;")
 				.well(style="background-color: rgba(78, 93,108,0.5);")
 					h3(style="color:white;text-align:center") Image:
@@ -31,8 +35,6 @@ html
 							span.roller
 						#dropzone
 						form#my-dropzone.dropzone(action='/upload_image')
-			div(class='col-md-12' style='text-align:center')
-				input(class="btn btn-default" type="submit" value="Submit" action='/newuser')
 link(rel="stylesheet" type="text/css" href='/stylesheets/bootstrap.min.css')
 link(rel="stylesheet" type="text/css" href='/stylesheets/bootstrap.theme.min.css')
 link(rel="stylesheet" type="text/css" href='/stylesheets/dropzone.css')

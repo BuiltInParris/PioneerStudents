@@ -1,0 +1,16 @@
+script.
+	var username = "!{username}";
+	setTimeout('setMyWindow(username)', 10000);
+	setInterval("document.getElementById('waitdot').innerHTML=document.getElementById('waitdot').innerHTML + '.'", 1000);
+	function setMyWindow(username){window.location.href = "./" + username + "/ghost";}
+
+html
+	body
+		h1(style="text-align:center") Hold your horses. 
+		h2(style="text-align:center") We're making the blog for !{username} at /blog/!{username}.
+		h1(id="waitdot" style="text-align:center") .
+
+//script(src='/javascripts/bootstrap.min.js')
+link(rel="stylesheet" type="text/css" href='/stylesheets/bootstrap.min.css')
+link(rel="stylesheet" type="text/css" href='/stylesheets/bootstrap.theme.min.css')
+link(rel="stylesheet" type="text/css" href='/stylesheets/style.css')

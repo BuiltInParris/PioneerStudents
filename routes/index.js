@@ -19,17 +19,31 @@ router.get('/addUser', function(req, res, next){
 	res.render('addUser', { title: 'Pioneer Students' });
 });
 
-router.post('/createuser', function(req,res){
+router.get('/deleteUser', function(req, res, next){
+        res.render('deleteUser', { title: 'Pioneer Students' });
+});
 
+
+router.post('/createuser', function(req,res){
 	//if the file exists
-	if (createWebsite(req.body.username)) {
-		res.redirect('/addUser');
-	}
-	else {
-		res.render('error', { title: 'Username/website already exists.'});
+	if (!createWebsite(req.body.username)) {
+		res.render('error', { username: 'Username/website already exists.'});
+	} else {
+		res.render('redirectToGhost', { username: req.body.username});
 	}
 	//add res.body information to database, and write to the map json as well.
 });
+
+router.post('/removeuser', function(req,res){
+	//if the file exists
+        if (!removeWebsite(req.body.username)) {
+                res.render('error', { username: 'Username/website doesn\'t exist.'});
+        } else {
+                res.render('deleteUser', { title: 'Pioneer Students' });
+        }
+});
+
+
 
 /* GET home page. */
 router.get('/', function(req, res, next) {
@@ -107,10 +121,12 @@ function createWebsite(username){
 	console.log("Creating website for username: " + username);
         source = "./node_modules/ghost";
         destination = "./node_modules/" + username;
-
-	if(!fs.exists(destination))
+	console.log(typeof fs.exists("./node_modules/ghost"));
+	if(typeof fs.exists(destination) == "undefined")
 	{
 		//if the file exists
+		//delete folder at destination
+		
 		//copy file from source to destination
 		ncp(source, destination, function (err) {
 			if (err) {
@@ -133,21 +149,27 @@ function createWebsite(username){
 				portNumb2 = "2369";
 
 				//This will need to be stored in a database and incremented as we go
-				lastPortNumber = "2750";
-				newPortNumb1 = (parseInt(lastPortNumber) + 1).toString();
-				newPortNumb2 = (parseInt(lastPortNumber) + 2).toString();
-				data = data.replace(new RegExp(oldurl, 'g'),newurl);
-				data = data.replace(new RegExp(portNumb1, 'g'),newPortNumb1);
-				data = data.replace(new RegExp(portNumb2, 'g'),newPortNumb2);
-				data = data.replace(new RegExp('http://localhost:' + newPortNumb1, 'g'),'http://localhost:'+newPortNumb1+'/'+username);
-				fs.writeFile(destination + "/config.js", data, function(err) {
-					if(err) {
-						return console.log(err);
-					}
+				fs.readFile('./data/portNum.txt', 'utf8', function read(err, portNum) {
+					lastPortNumber = parseInt(portNum);
+					newPortNumb1 = (lastPortNumber + 1).toString();
+					newPortNumb2 = (lastPortNumber + 2).toString();
+					data = data.replace(new RegExp(oldurl, 'g'),newurl);
+					data = data.replace(new RegExp(portNumb1, 'g'),newPortNumb1);
+					data = data.replace(new RegExp(portNumb2, 'g'),newPortNumb2);
+					data = data.replace(new RegExp('http://localhost:' + newPortNumb1, 'g'),'http://localhost:'+newPortNumb1+'/'+username);
+					fs.writeFile(destination + "/config.js", data, function(err) {
+						if(err) {
+							return console.log(err);
+						}
+					});
+					fs.writeFile('./data/portNum.txt', newPortNumb2, function(err) {
+						if(err) {
+							return console.log(err);
+						}
+					});
 				});
 			});
-
-			//Modifying app.js to add require and new ghostserver. Replaces comment in place.
+				//Modifying app.js to add require and new ghostserver. Replaces comment in place.
 			fs.readFile('./app.js', 'utf8', function read(err, data) {
 				requireStr = "var " + username + " = require('" + username + "');";
 				requireSearchStr = "// -- Please don't touch -- ghost require creation -- //";
@@ -168,6 +190,79 @@ function createWebsite(username){
 		return false;
 	}
 }
+function removeWebsite(username){
+        console.log("Deleting website for username: " + username);
+        destination = "./node_modules/" + username;
 
+        if(typeof fs.exists(destination) == "undefined")
+        {
+                //if the file exists
+		rmdir(destination);
+                //Modifying app.js to add remove require and remove ghostserver. Replaces comment in place.
+		fs.readFile('./app.js', 'utf8', function read(err, data) {
+			requireSearchStr = "var " + username + " = require('" + username + "');\n";
+			requireSearchStr2 = "var " + username + " = require('" + username + "');\r";                        
+			requireSearchStr3 = "var " + username + " = require('" + username + "');\r\n";
+			routeSearchStr = username + "().then(function (ghostServer) { app.use('/" + username + "', ghostServer.rootApp);ghostServer.start(app);});\n";
+			routeSearchStr2 = username + "().then(function (ghostServer) { app.use('/" + username + "', ghostServer.rootApp);ghostServer.start(app);});\r";
+			routeSearchStr3 = username + "().then(function (ghostServer) { app.use('/" + username + "', ghostServer.rootApp);ghostServer.start(app);});\r\n";
+			data = data.replace(new RegExp(requireSearchStr3, 'g'),"");
+                        data = data.replace(new RegExp(routeSearchStr3, 'g'),"");
+			data = data.replace(new RegExp(requireSearchStr2, 'g'),"");
+                        data = data.replace(new RegExp(routeSearchStr2, 'g'),"");
+			data = data.replace(new RegExp(requireSearchStr, 'g'),"");
+			data = data.replace(new RegExp(routeSearchStr, 'g'),"");
+			fs.writeFile("./app.js", data, function(err) {
+				if(err) {
+					return console.log(err);
+				}
+			});
+		});
+                return true;
+        } else {
+                return false;
+        }
+}
+
+function rmdir(path, callback) {
+	fs.readdir(path, function(err, files) {
+		if(err) {
+			// Pass the error on to callback
+			callback(err, []);
+			return;
+		}
+		var wait = files.length,
+			count = 0,
+			folderDone = function(err) {
+			count++;
+			// If we cleaned out all the files, continue
+			if( count >= wait || err) {
+				fs.rmdir(path,callback);
+			}
+		};
+		// Empty directory to bail early
+		if(!wait) {
+			folderDone();
+			return;
+		}
+		
+		// Remove one or more trailing slash to keep from doubling up
+		path = path.replace(/\/+$/,"");
+		files.forEach(function(file) {
+			var curPath = path + "/" + file;
+			fs.lstat(curPath, function(err, stats) {
+				if( err ) {
+					callback(err, []);
+					return;
+				}
+				if( stats.isDirectory() ) {
+					rmdir(curPath, folderDone);
+				} else {
+					fs.unlink(curPath, folderDone);
+				}
+			});
+		});
+	});
+};
 
 module.exports = router;

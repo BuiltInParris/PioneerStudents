@@ -5,8 +5,6 @@ var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 
-var spp53 = require('spp53');
-var test1 = require('test1');
 // -- Please don't touch -- ghost require creation -- //
 
 var routes = require('./routes/index');
@@ -29,11 +27,6 @@ app.use('/', routes);
 app.use('/users', users);
 
 
-spp53().then(function (ghostServer) {
-    app.use('/spp53', ghostServer.rootApp);
-    ghostServer.start(app);
-});
-test1().then(function (ghostServer) { app.use('/test1', ghostServer.rootApp);ghostServer.start(app);});
 // -- Please don't touch -- ghost route creation -- //
 
 // catch 404 and forward to error handler

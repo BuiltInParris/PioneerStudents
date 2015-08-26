@@ -1,0 +1,35 @@
+html
+	head
+		h1 Blogs 
+	body
+		div(class='well col-md-6')
+			br
+			.input-group
+				span#basic-addon1.input-group-addon Username: 
+				input.form-control(type='text', placeholder='Username', aria-describedby='basic-addon1')
+			.input-group
+				span#basic-addon1.input-group-addon City:
+				input#geocomplete.form-control(type='text', placeholder='City', aria-describedby='basic-addon1')
+			.input-group
+				span#basic-addon1.input-group-addon First Name:
+				input.form-control(type='text', placeholder='First Name', aria-describedby='basic-addon1')
+			.input-group
+				span#basic-addon1.input-group-addon Last Name:
+				input.form-control(type='text', placeholder='Last Name', aria-describedby='basic-addon1')
+			input(class="btn btn-default" type="submit" value="Submit")
+		div(class='well col-md-6')
+			h4 Upload Image:
+			form(action="api/photos", method="post", enctype="multipart/form-data", class="dropzone")
+				input(type="file", name="userPhoto")
+script(src='/javascripts/jquery.js')
+script(src='/javascripts/bootstrap.min.js')
+script(src='/javascripts/jquery.geocomplete.js')
+link(rel="stylesheet" type="text/css" href='/stylesheets/bootstrap.min.css')
+link(rel="stylesheet" type="text/css" href='/stylesheets/style.css')
+link(red="stylesheet" type="text/css" href='/stylesheets/dropzone.css')
+script(src="http://maps.googleapis.com/maps/api/js?sensor=false&libraries=places")
+script.
+	$(function(){
+		$("#geocomplete").geocomplete()
+	});
+script(src='/javascripts/dropzone.js')

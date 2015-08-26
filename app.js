@@ -26,7 +26,6 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use('/', routes);
 app.use('/users', users);
 
-
 // -- Please don't touch -- ghost route creation -- //
 
 // catch 404 and forward to error handler

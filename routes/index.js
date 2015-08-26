@@ -121,12 +121,9 @@ function createWebsite(username){
 	console.log("Creating website for username: " + username);
         source = "./node_modules/ghost";
         destination = "./node_modules/" + username;
-	console.log(typeof fs.exists("./node_modules/ghost"));
-	if(typeof fs.exists(destination) == "undefined")
+	if(fs.existsSync(destination) == false)
 	{
 		//if the file exists
-		//delete folder at destination
-		
 		//copy file from source to destination
 		ncp(source, destination, function (err) {
 			if (err) {
@@ -194,24 +191,16 @@ function removeWebsite(username){
         console.log("Deleting website for username: " + username);
         destination = "./node_modules/" + username;
 
-        if(typeof fs.exists(destination) == "undefined")
+	if(fs.existsSync(destination) == true)
         {
                 //if the file exists
 		rmdir(destination);
                 //Modifying app.js to add remove require and remove ghostserver. Replaces comment in place.
 		fs.readFile('./app.js', 'utf8', function read(err, data) {
-			requireSearchStr = "var " + username + " = require('" + username + "');\n";
-			requireSearchStr2 = "var " + username + " = require('" + username + "');\r";                        
-			requireSearchStr3 = "var " + username + " = require('" + username + "');\r\n";
-			routeSearchStr = username + "().then(function (ghostServer) { app.use('/" + username + "', ghostServer.rootApp);ghostServer.start(app);});\n";
-			routeSearchStr2 = username + "().then(function (ghostServer) { app.use('/" + username + "', ghostServer.rootApp);ghostServer.start(app);});\r";
-			routeSearchStr3 = username + "().then(function (ghostServer) { app.use('/" + username + "', ghostServer.rootApp);ghostServer.start(app);});\r\n";
-			data = data.replace(new RegExp(requireSearchStr3, 'g'),"");
-                        data = data.replace(new RegExp(routeSearchStr3, 'g'),"");
-			data = data.replace(new RegExp(requireSearchStr2, 'g'),"");
-                        data = data.replace(new RegExp(routeSearchStr2, 'g'),"");
-			data = data.replace(new RegExp(requireSearchStr, 'g'),"");
-			data = data.replace(new RegExp(routeSearchStr, 'g'),"");
+			var requireSearchStr = "var " + username + " = require(\'" + username + "\');";
+			var routeSearchStr = username + "().then(function (ghostServer) { app.use(\'/" + username + "\', ghostServer.rootApp);ghostServer.start(app);});";
+			data = data.replace(requireSearchStr+"\n","");
+			data = data.replace(routeSearchStr+"\n","");
 			fs.writeFile("./app.js", data, function(err) {
 				if(err) {
 					return console.log(err);

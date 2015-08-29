@@ -1,6 +1,7 @@
 var m_width = $("#map").width(), width = $("body").width(), height = $("body").height(), country, state;
 var projection = d3.geo.mercator().scale(180).translate([width / 2, height / 1.5]);
 var path = d3.geo.path().projection(projection);
+var cityImg = "";
 var svg = d3.select("#map").append("svg")
         .attr("preserveAspectRatio", "xMidYMid")
         .attr("viewBox", "0 0 " + width + " " + height)
@@ -105,39 +106,62 @@ function country_clicked(d) {
 
 function state_clicked(d) {
         g.selectAll("#cities").remove();
-        if (d && state !== d) {
+        city = null
+	if (d && state !== d) {
 		var xyz = get_xyz(d);
 		state = d;
 		country_code = state.id.substring(0, 3).toLowerCase();
 		state_name = state.properties.name;
 		d3.json("/json/cities_" + country_code + ".topo.json", function(error, us) {
 			cities = topojson.feature(us, us.objects.cities).features.filter(function(d) { return state_name == d.properties.state; });
-			g.append("g")
-				.attr("id", "cities")
-				.selectAll("path")
-                                .data(cities)
-				.enter()
-                                .append("path")
-				.attr("id", function(d) { return d.properties.name; })
-                                .attr("class", "city")
-                                .attr("d", path.pointRadius(50 / xyz[2]))
-				.attr("style", "fill:url(#mypat)");
-				//.attr("transform", "translate(" + (-xyz[0]) + ","+ (-xyz[1]) + ") scale(2)");
-			g.append("defs")
-				.append("pattern")
-				.attr('preserveAspectRatio', 'xMidYMid meet')
-				.attr('patternContentUnits', 'objectBoundingBox')
-				.attr('height', '1')
-				.attr('width', '1')
-				.attr('x', '0')
-				.attr('y', '0')
-				.attr('id', 'mypat')
-				.append("image")
-				.attr('height', '1')
-                                .attr('width', '1')
-                                .attr('x', '0')
-                                .attr('y', '0')
-				.attr("xlink:href", "/images/" + cities[0].properties.image);
+				
+				
+				var holdG = g.append("g")
+					.attr("id", "cities")
+					.selectAll("path")
+					.data(cities)
+					.enter()
+					.append("path")
+					.attr("class", "city")
+					.attr("d", path.pointRadius(50 / xyz[2]))
+					.attr("style", "fill:url(#cityholder)")
+					.on('click', city_clicked);
+					//.attr("transform", "translate(" + (-xyz[0]) + ","+ (-xyz[1]) + ") scale(2)");
+				for(var i=0; i < cities.length; i++){
+				g.append("defs")
+					.append("pattern")
+					.attr('preserveAspectRatio', 'xMidYMid meet')
+					.attr('patternContentUnits', 'objectBoundingBox')
+					.attr('height', '1')
+					.attr('width', '1')
+					.attr('x', '0')
+					.attr('y', '0')
+					.attr('class', "cityclass")
+					.append("image")
+					.attr('height', '1')
+					.attr('width', '1')
+					.attr('class', 'dotimgs')
+					.attr('x', '0')
+                                	.attr('y', '0')
+					.attr("xlink:href", "/images/null");
+				}
+				var k = 0;
+				$(".city").each(function(){
+					$(this).attr("id", cities[k].properties.username);
+					$(this).css("fill", "url(#" + cities[k].properties.username + ")");
+					k++;
+				});
+				k=0
+				$(".cityclass").each(function(){
+                                        $(this).attr("id", cities[k].properties.username);
+                                        k++;
+                                });
+
+				k = 0;
+                                $(".dotimgs").each(function(){
+                                        $(this).attr("href", "/images/" + cities[k].properties.image);
+                                       	k++;
+                                });
 			zoom(xyz);
 		});
 	} else {
@@ -145,6 +169,22 @@ function state_clicked(d) {
 		country_clicked(country);
         }
 }
+
+function city_clicked(d) {
+        if (d && city !== d) {
+                var xyz = get_xyz(d);
+                city = d;
+		$('#userModal').modal();
+		$('#fullName').text(d.properties.name);
+		$('#description').text(d.properties.description);
+		$('#userImage').attr("src", "./images/" + d.properties.image);
+        } else {
+                city = null;
+                state_clicked(state);
+        }
+}
+
+
 
 $(window).resize(function() {
         var w = $("#map").width();

@@ -27,7 +27,7 @@ router.get('/deleteUser', function(req, res, next){
 router.post('/createuser', function(req,res){
 	//if the file exists
 	if (!createWebsite(req.body.username)) {
-		res.render('error', { username: 'Username/website already exists.'});
+		res.render('error', { status: req.body.status});
 	} else {
 		res.render('redirectToGhost', { username: req.body.username});
 	}

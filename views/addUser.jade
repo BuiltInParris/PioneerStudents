@@ -10,19 +10,19 @@ html
 					form(action='/createuser', method='POST')
 						.input-group
 							span#basic-addon1.input-group-addon Username: 
-							input.form-control(type='text', pattern="^[0-9a-zA-Z]+$",placeholder='Username', name='username', aria-describedby='basic-addon1')
+							input.form-control(type='text', pattern="^[0-9a-zA-Z]{3,99}$",placeholder='Username', name='username', aria-describedby='basic-addon1' required)
 						br
 						.input-group
 							span#basic-addon1.input-group-addon City:
-							input#geocomplete.form-control(type='text', placeholder='City', name='city', aria-describedby='basic-addon1')
+							input#geocomplete.form-control(type='text', pattern="^+$", placeholder='City', name='city', aria-describedby='basic-addon1' required)
 						br
 						.input-group
 							span#basic-addon1.input-group-addon First Name:
-							input.form-control(type='text', placeholder='First Name', name='firstname', aria-describedby='basic-addon1')
+							input.form-control(type='text', pattern="^[0-9a-zA-Z]{2,99}$", placeholder='First Name', name='firstname', aria-describedby='basic-addon1' required)
 						br
 						.input-group
 							span#basic-addon1.input-group-addon Last Name:
-							input.form-control(type='text', placeholder='Last Name', name='lastname', aria-describedby='basic-addon1')
+							input.form-control(type='text', pattern="^[0-9a-zA-Z]{2,99}$", placeholder='Last Name', name='lastname', aria-describedby='basic-addon1' required)
 						br
 						center
 							input(class="btn btn-default" type="submit" value="Submit" action='/createuser')

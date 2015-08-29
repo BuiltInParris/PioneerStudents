@@ -23,6 +23,9 @@ router.get('/deleteUser', function(req, res, next){
         res.render('deleteUser', { title: 'Pioneer Students' });
 });
 
+router.get('/userPanel', function(req, res, next){
+        res.render('userPanel', { title: 'Pioneer Students' });
+});
 
 router.post('/createuser', function(req,res){
 	//if the file exists

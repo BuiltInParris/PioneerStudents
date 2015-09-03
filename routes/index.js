@@ -7,6 +7,7 @@ var path = require('path');
 var uploadManager = require('./uploadManager')(router);
 var ncp = require('ncp').ncp;
 var fs = require('fs');
+var geocoder = require('geocoder');
 
 router.get('/addUser', function(req, res, next){
 /*	fs.readFile(req.files.displayImage.path, function (err, data) {
@@ -28,22 +29,134 @@ router.get('/userPanel', function(req, res, next){
 });
 
 router.post('/createuser', function(req,res){
-	//if the file exists
+
+	var state = "";
+
+	var name = req.body.firstname + " " + req.body.lastname;
+
+	var username = req.body.username;
+
+	var image = req.body.username + ".jpg";
+	
+	var description = req.body.description;
+
+	var university = req.body.university;
+
+        var options = {host:'https://maps.googleapis.com/maps/api/geocode/json?address=' + req.body.city.replace(/ /g, '+')  + '&key=AIzaSyBkL_7hj4jZVeDJS0TDy1sdME8DOXG_diI'}
+        
+
+	var country = "";
+
+        geocoder.geocode(req.body.city, function(err, data) {
+		var components = data.results[0].address_components;
+		for(var x = 0; x < components.length; x++)
+		{
+			if(components[x].types[0] == "administrative_area_level_1")
+			{
+				state = components[x].long_name;
+			}
+			if(components[x].types[0] == "country")
+			{
+				country = components[x].short_name
+			}
+		}
+		
+		var location = data.results[0].geometry.location
+		var latitude = parseFloat(location.lat)
+		var longitude = parseFloat(location.lng)
+
+		//Convert latitude and longitude to coordinates for the map
+        	var longScale = 0.00970377347797255;
+	        var latScale = 0.005159573147276777;
+        	var longTrans = -166.80802006230326;
+	        var latTrans = 19.699997781345246;
+	        var specialLongitude = Math.abs((Math.abs(longitude)+longTrans)/longScale);
+        	var specialLatitude = (latitude-latTrans)/latScale;
+
+		 //Read in the usa cities json
+	        fs.readFile('public/json/cities_' + country.toLowerCase() + '.topo.json', 'utf8', function (err,data) {
+        	        if (err) {
+                	        return console.log(err);
+			}
+                	var json_obj = JSON.parse(data);
+			var cityJSON = json_obj.objects.cities.geometries;
+			var newCity = JSON.parse('{"type": "Point","properties": {"state": "' + state  + '","name": "' + name + '","username": "' + username + '","university": "' + university + '","image": "'+ image + '","description": "' + description + '"},"coordinates": [' + Math.round(specialLongitude)  + ',' + Math.round(specialLatitude) + ']}');
+			cityJSON.push(newCity);
+			json_obj.objects.cities.geometries = cityJSON;
+			fs.writeFile("./public/json/" + "cities_" + country.toLowerCase()  + ".topo.json", JSON.stringify(json_obj), function(err) {
+                        	if(err) {
+                                	return console.log(err);
+                                }
+                        });
+        	});
+        });
+	/*
+        //SQL QUERYING
+        // -----------
+        var connection = mysql.createConnection({
+                host : "localhost",
+                user : "pioneer",
+                password : "yeOldHomestead"
+        });
+
+        connection.connect();
+
+        connection.query("use PioneerStudents");
+        var strQuery = "SELECT * FROM test";
+        //var strQuery = "INSERT INTO test (col1) VALUES('mayhaps');";
+
+        connection.query(strQuery, function(err, rows){
+                if(err){
+                        throw err;
+                }
+                else
+                {
+                        console.log(rows)
+                }
+        });
+        */
+
+	res.render('addUser');
+	/*//if the file exists
 	if (!createWebsite(req.body.username)) {
+		console.log("error wha");
 		res.render('error', { status: req.body.status});
 	} else {
 		res.render('redirectToGhost', { username: req.body.username});
-	}
+	}*/
 	//add res.body information to database, and write to the map json as well.
 });
 
 router.post('/removeuser', function(req,res){
+
 	//if the file exists
-        if (!removeWebsite(req.body.username)) {
-                res.render('error', { username: 'Username/website doesn\'t exist.'});
-        } else {
+        //if (!removeWebsite(req.body.username)) {
+	//	res.render('error', { username: 'Username/website doesn\'t exist.'});
+        //} else {
+		//Read in the usa cities json (for eventual writing)
+                fs.readFile('public/json/cities_' + req.body.country.toLowerCase() + '.topo.json', 'utf8', function (err,data) {
+                        if (err) {
+                                return console.log(err);
+                        }
+                        var json_obj = JSON.parse(data);
+                        var cityJSON = json_obj.objects.cities.geometries;
+                        for(var x = 0; x < cityJSON.length; x++)
+                	{
+                        	if(cityJSON[x].properties.username == req.body.username)
+                	        {
+	                        	cityJSON.pop(x);
+				}
+			}
+			json_obj.objects.cities.geometries = cityJSON;
+                        fs.writeFile("./public/json/" + "cities_" + req.body.country.toLowerCase()  + ".topo.json", JSON.stringify(json_obj), function(err) {
+                                if(err) {
+                                        return console.log(err);
+                                }
+                        });
+                });
+
                 res.render('deleteUser', { title: 'Pioneer Students' });
-        }
+        //}
 });
 
 
@@ -51,72 +164,6 @@ router.post('/removeuser', function(req,res){
 /* GET home page. */
 router.get('/', function(req, res, next) {
 
-	/*	
-	//Convert latitude and longitude to coordinates for the map
-	var latitude = 39.9491;
-	var longitude = 75.1606;
-        var longScale = 0.00970377347797255;
-        var latScale = 0.005159573147276777;
-        var longTrans = -166.80802006230326;
-        var latTrans = 19.699997781345246;
-        
-        var specialLongitude = Math.abs((longitude+longTrans)/longScale);
-        var specialLatitude = (latitude-latTrans)/latScale;
-        //console.log("Longitude:" + specialLongitude + ", Latitude:" + specialLatitude);
-	
-
-	
-	var options = {host:'https://maps.googleapis.com/maps/api/geocode/json?address=1600+Amphitheatre+Parkway,+Mountain+View,+CA&key=AIzaSyBkL_7hj4jZVeDJS0TDy1sdME8DOXG_diI'}
-	
-
-	var geocoder;
-	var map;
-	  geocoder = new google.maps.Geocoder();
-	  var address = document.getElementById('address').value;
-	  geocoder.geocode( { 'address': address}, function(results, status) {
-	    if (status == google.maps.GeocoderStatus.OK) {
-	      map.setCenter(results[0].geometry.location);
-		console.log('mabes');
-	    } else {
-	      alert('Geocode was not successful for the following reason: ' + status);
-	    }
-	  });
-
-
-
-	//Read in the usa cities json (for eventual writing)
-	fs.readFile('public/json/cities_usa.topo.json', 'utf8', function (err,data) {
-		if (err) {
-			return console.log(err);
-		}
-		var json_obj = JSON.parse(data);
-	        //console.log(json_obj.objects.cities.geometries);
-	});
-
-	//SQL QUERYING
-	// -----------
-	var connection = mysql.createConnection({
-        	host : "localhost",
-        	user : "pioneer",
-        	password : "yeOldHomestead"
-	});
-
-	connection.connect();
-
-	connection.query("use PioneerStudents");
-	var strQuery = "SELECT * FROM test";
-	//var strQuery = "INSERT INTO test (col1) VALUES('mayhaps');";
-
-	connection.query(strQuery, function(err, rows){
-		if(err){
-                	throw err;
-		}
-        	else
-        	{
-			console.log(rows)
-        	}
-	});
-	*/
 	res.render('index', { title: 'Pioneer Students' });
 });
 

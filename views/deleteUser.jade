@@ -12,6 +12,10 @@ html
 							span#basic-addon1.input-group-addon Username: 
 							input.form-control(type='text', pattern="^[0-9a-zA-Z]+$",placeholder='Username', name='username', aria-describedby='basic-addon1')
 						br
+						.input-group
+							span#basic-addon1.input-group-addon Country Abbreviation:
+							input.form-control(type='text', pattern="^[0-9a-zA-Z]+$",placeholder='US...', name='country', aria-describedby='basic-addon1')
+						br
 						center
 							input(class="btn btn-default" type="submit" value="Submit" action='/removeuser')
 link(rel="stylesheet" type="text/css" href='/stylesheets/bootstrap.min.css')

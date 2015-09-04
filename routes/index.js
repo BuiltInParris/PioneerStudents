@@ -22,7 +22,6 @@ var isAuthenticated = function (req, res, next) {
 
 module.exports = function(passport){
 router.get('/addUser', isAuthenticated, function(req, res, next){
-	console.log(req);
 	/*fs.readFile(req.files.displayImage.path, function (err, data) {
 		// ...
 		var newPath = __dirname + "/uploads/uploadedFileName";
@@ -39,6 +38,16 @@ router.get('/deleteUser', isAuthenticated, function(req, res, next){
 
 router.get('/userPanel', isAuthenticated, function(req, res, next){
         res.render('userPanel', { title: 'Pioneer Students' });
+});
+
+router.get('/us_userinfo', function(req,res, next){
+fs.readFile('public/json/cities_us.topo.json', 'utf8', function (err,data) {
+                        if (err) {
+                                return console.log(err);
+                        }
+                        //var json_obj = JSON.parse(data);
+			res.json(data);
+                });
 });
 
 router.post('/createuser', isAuthenticated, function(req,res){
@@ -64,6 +73,7 @@ router.post('/createuser', isAuthenticated, function(req,res){
 		var components = data.results[0].address_components;
 		for(var x = 0; x < components.length; x++)
 		{
+			console.log(components);
 			if(components[x].types[0] == "administrative_area_level_1")
 			{
 				state = components[x].long_name;

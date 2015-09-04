@@ -61,7 +61,6 @@ function country_clicked(d) {
 		country = d;
 		if (d.id == 'US' || d.id =='JPN') {
 			d3.json("/json/states_" + d.id.toLowerCase() + ".topo.json", function(error, us) {
-				console.log(us);
 				g.append("g")
 					.attr("id", "states")
 					.selectAll("path")

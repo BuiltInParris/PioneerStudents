@@ -13,6 +13,8 @@ svg.append("rect")
         .attr("height", height)
         .on("click", country_clicked);
 
+var scriptran = 0;
+
 var g = svg.append("g");
 d3.json("/json/countries.topo.json", function(error, us) {
         g.append("g")
@@ -119,8 +121,8 @@ function state_clicked(d) {
 		}
 		d3.json("/json/cities_" + country_code + ".topo.json", function(error, us) {
 			cities = topojson.feature(us, us.objects.cities).features.filter(function(d) { return state_name == d.properties.state; });
-				
-				
+				$(".cityclass").remove();
+
 				var holdG = g.append("g")
 					.attr("id", "cities")
 					.selectAll("path")
@@ -149,13 +151,14 @@ function state_clicked(d) {
                                 	.attr('y', '0')
 					.attr("xlink:href", "/images/null");
 				}
-				var k = 0;
+				
+				k = 0;
 				$(".city").each(function(){
 					$(this).attr("id", cities[k].properties.username);
 					$(this).css("fill", "url(#" + cities[k].properties.username + ")");
 					k++;
 				});
-				k=0
+				k=0;
 				$(".cityclass").each(function(){
                                         $(this).attr("id", cities[k].properties.username);
                                         k++;

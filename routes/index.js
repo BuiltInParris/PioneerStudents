@@ -22,13 +22,14 @@ var isAuthenticated = function (req, res, next) {
 
 module.exports = function(passport){
 router.get('/addUser', isAuthenticated, function(req, res, next){
-	fs.readFile(req.files.displayImage.path, function (err, data) {
+	console.log(req);
+	/*fs.readFile(req.files.displayImage.path, function (err, data) {
 		// ...
 		var newPath = __dirname + "/uploads/uploadedFileName";
 		fs.writeFile(newPath, data, function (err) {
 		res.redirect("back");
 	});
-});
+});*/
 	res.render('addUser', { title: 'Pioneer Students' });
 });
 
@@ -102,49 +103,24 @@ router.post('/createuser', isAuthenticated, function(req,res){
                         });
         	});
         });
-	/*
-        //SQL QUERYING
-        // -----------
-        var connection = mysql.createConnection({
-                host : "localhost",
-                user : "pioneer",
-                password : "yeOldHomestead"
-        });
 
-        connection.connect();
-
-        connection.query("use PioneerStudents");
-        var strQuery = "SELECT * FROM test";
-        //var strQuery = "INSERT INTO test (col1) VALUES('mayhaps');";
-
-        connection.query(strQuery, function(err, rows){
-                if(err){
-                        throw err;
-                }
-                else
-                {
-                        console.log(rows)
-                }
-        });
-        */
-
-	res.render('addUser');
-	/*//if the file exists
+	res.redirect('/addUser');
+	//if the file exists
 	if (!createWebsite(req.body.username)) {
 		console.log("error wha");
 		res.render('error', { status: req.body.status});
 	} else {
 		res.render('redirectToGhost', { username: req.body.username});
-	}*/
+	}
 	//add res.body information to database, and write to the map json as well.
 });
 
 router.post('/removeuser', isAuthenticated, function(req,res){
 
 	//if the file exists
-        //if (!removeWebsite(req.body.username)) {
-	//	res.render('error', { username: 'Username/website doesn\'t exist.'});
-        //} else {
+        if (!removeWebsite(req.body.username)) {
+		res.render('error', { username: 'Username/website doesn\'t exist.'});
+        } else {
 		//Read in the usa cities json (for eventual writing)
                 fs.readFile('public/json/cities_' + req.body.country.toLowerCase() + '.topo.json', 'utf8', function (err,data) {
                         if (err) {
@@ -167,8 +143,8 @@ router.post('/removeuser', isAuthenticated, function(req,res){
                         });
                 });
 
-                res.render('deleteUser', { title: 'Pioneer Students' });
-        //}
+                res.redirect('/deleteUser');
+        }
 });
 
 

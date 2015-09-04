@@ -178,7 +178,7 @@ a {
 
 .background {
         fill: #A3D9A3;
-        pointer-events: all;
+	pointer-events: all;
 }
 
 #countries, #states {

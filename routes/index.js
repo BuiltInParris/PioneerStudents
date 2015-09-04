@@ -317,33 +317,33 @@ function rmdir(path, callback) {
 };
 
 	
+	// GET login page
+	router.get('/login', function(req, res){
+		res.render('login', {message: req.flash('message')});
+	});
+
 	// Handle Login POST 
 	router.post('/login', passport.authenticate('login', {
-		successRedirect: '/home',
-		failureRedirect: '/',
+		successRedirect: '/userPanel',
+		failureRedirect: '/login',
 		failureFlash : true  
 	}));
 
 	/* GET Registration Page */
-	router.get('/signup', function(req, res){
+	router.get('/signup', isAuthenticated, function(req, res){
 		res.render('register',{message: req.flash('message')});
 	});
 
-	router.post('/signup', passport.authenticate('signup', {
-		successRedirect: '/home',
+	router.post('/signup', isAuthenticated, passport.authenticate('signup', {
+		successRedirect: '/userPanel',
 		failureRedirect: '/signup',
 		failureFlash : true  
 	}));
 
-	/* GET Home Page */
-	router.get('/home', isAuthenticated, function(req, res){
-		res.render('home', { user: req.user });
-	});
-
 	/* Handle Logout */
-	router.get('/signout', function(req, res) {
+	router.get('/signout', isAuthenticated,function(req, res) {
 		req.logout();
-		res.redirect('/');
+		res.redirect('/login');
 	});
 
 	return router;

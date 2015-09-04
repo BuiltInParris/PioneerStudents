@@ -59,7 +59,7 @@ function country_clicked(d) {
         if (d && country !== d) {
 		var xyz = get_xyz(d);
 		country = d;
-		if (d.id == 'US' || d.id =='JPN') {
+		if (d.id == 'US' || d.id =='JP') {
 			d3.json("/json/states_" + d.id.toLowerCase() + ".topo.json", function(error, us) {
 				g.append("g")
 					.attr("id", "states")
@@ -117,6 +117,10 @@ function state_clicked(d) {
 		if(country_code == "usa")
 		{
 			country_code = "us";
+		}
+		else if(country_code == "jpn")
+		{
+			country_code = "jp";
 		}
 		d3.json("/json/cities_" + country_code + ".topo.json", function(error, us) {
 			cities = topojson.feature(us, us.objects.cities).features.filter(function(d) { return state_name == d.properties.state; });

@@ -2,3 +2,7 @@
 \\node_modules\\**
 /data/**
 \\data\\**
+/public/json/**
+\\public\\json\**
+/public/images/**
+\\public\\images\\**

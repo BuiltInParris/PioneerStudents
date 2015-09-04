@@ -23,7 +23,7 @@ body {
 
 .logoImg{
 	height:30%;
-	width:30%;
+	width:auto;
 	top:20%;
 	position:absolute;
 	left:0;

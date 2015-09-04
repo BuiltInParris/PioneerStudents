@@ -26,11 +26,11 @@ html
 						br
 						.input-group
 							span#basic-addon1.input-group-addon Description:
-							input.form-control(type='text', pattern="^.{2,99}$", placeholder='Description...', name='description', aria-describedby='basic-addon1' required)
+							input.form-control(type='text', pattern="^.{2,300}$", placeholder='Description...', name='description', aria-describedby='basic-addon1' required)
 						br
 						.input-group
 							span#basic-addon1.input-group-addon University:
-							input.form-control(type='text', pattern="^[0-9a-zA-Z]{2,99}$", placeholder='My university...', name='lastname', aria-describedby='basic-addon1' required)
+							input.form-control(type='text', pattern="^.{2,100}$", placeholder='My university...', name='university', aria-describedby='basic-addon1' required)
 						br
 						center
 							input(class="btn btn-default" type="submit" value="Submit" action='/createuser')

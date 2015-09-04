@@ -8,6 +8,7 @@ var bodyParser = require('body-parser');
 
 
 var caliboy25 = require('caliboy25');
+var edwina = require('edwina');
 // -- Please don't touch -- ghost require creation -- //
 
 //var routes = require('./routes/index');
@@ -30,6 +31,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use('/users', users);
 
 caliboy25().then(function (ghostServer) { app.use('/caliboy25', ghostServer.rootApp);ghostServer.start(app);});
+edwina().then(function (ghostServer) { app.use('/edwina', ghostServer.rootApp);ghostServer.start(app);});
 // -- Please don't touch -- ghost route creation -- //
 
 /*

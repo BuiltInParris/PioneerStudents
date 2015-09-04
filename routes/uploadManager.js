@@ -1,16 +1,16 @@
 var imageOptions = {
-  tmpDir: __dirname + '/../public/uploaded_images/tmp',
-  uploadDir: __dirname + '/../public/uploaded_images/files',
-  uploadUrl: '/uploaded_images/files/',
+  tmpDir: __dirname + '/../public/images/tmp',
+  uploadDir: __dirname + '/../public/images',
+  uploadUrl: '/images',
   storage: {
     type: 'local'
   }
 };
 
 var jsonOptions = {
-  tmpDir: __dirname + '/../public/json/tmp',
-  uploadDir: __dirname + '/../public/json',
-  uploadUrl: '/public/json',
+  tmpDir: __dirname + '/../public/images/tmp',
+  uploadDir: __dirname + '/../public/images',
+  uploadUrl: '/public/images',
   storage: {
     type: 'local'
   }
@@ -35,14 +35,7 @@ module.exports = function(router) {
     });
   });
 
-  router.post('/newuser', function(req, res) {
-    jsonUploader.post(req, res, function(obj) {
-	res.send(JSON.stringify(obj));
-    });
-  });
-
-
-  router.delete('/uploaded_images/files/:name', function(req, res) {
+  router.delete('/images/:name', function(req, res) {
     imageUploader.delete(req, res, function(obj) {
       res.send(JSON.stringify(obj));
     });

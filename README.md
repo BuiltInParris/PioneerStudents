@@ -42,72 +42,8 @@ Blogging:
 
 - Ghost Blogs
 
-Our mapping libraries were the first to be implimented and we combined them
-
-to create a landing page map which shows existing distributors and links to
-
-their blogs. Our choice of Bootstrap allows us to dynamically resize our
-
-web page and allows for mobile integration as well. Our site uses
-
-Passport's services to create a database (MongoDB) of users and passwords,
-
-which bcrypt then encrypts. Our page also has an administator panel in
-
-which new users can be created, new admins created, and users can be
-
-deleted. Using passports authentification these pages are only available to
-
-administrators. Finally, each time a user is created a Ghost Blog is
-
-generated and then populated by the user.  
-
-We have also created a mobile app which spawns a web view and displays our
-
-website. We chose to use Bootstrap not only for its web properties but also
-
-for its mobile properties. Our site flows seemlessly from desktop to mobile
-
-and using this simple application all functionality is available on android
-
-devices. 
-
-Along with our site and mobile application we have also generated our own
-
-web service. Currently the web service allows the return of all users in
-
-the United States, but it could very easily be expanded to other countries
-
-as well. The web service returns a json document with all users username,
-
-city, university, description, and a link to their image. This web service
-
-is useful for those attempting to find information about the bloggers on
-
-Pioneer Students. 
+Our mapping libraries were the first to be implimented and we combined them to create a landing page map which shows existing distributors and links to their blogs. Our choice of Bootstrap allows us to dynamically resize our web page and allows for mobile integration as well. Our site uses Passport's services to create a database (MongoDB) of users and passwords, which bcrypt then encrypts. Our page also has an administator panel in which new users can be created, new admins created, and users can be deleted. Using passports authentification these pages are only available to administrators. Finally, each time a user is created a Ghost Blog is generated and then populated by the user. We have also created a mobile app which spawns a web view and displays our website. We chose to use Bootstrap not only for its web properties but also for its mobile properties. Our site flows seemlessly from desktop to mobile and using this simple application all functionality is available on android devices. Along with our site and mobile application we have also generated our own web service. Currently the web service allows the return of all users in the United States, but it could very easily be expanded to other countries as well. The web service returns a json document with all users username, city, university, description, and a link to their image. This web service is useful for those attempting to find information about the bloggers on Pioneer Students.
 
 RESULTS:
 
-While Pioneer Students isn't up to full functionality (search isn't
-
-implimented, and it only works in the US currently). More work is required
-
-to optimize image uploading as well as window resizing of the map.
-
-Considering the time frame we have accomplished a lot. We created boiler
-
-plate code to create a multi blog platform from a single website. This was
-
-then integrated with the addition and removal of points on a world map.
-
-This data was then corrilated with user creation and deletion, and those
-
-pages were placed behind security measures. We also have the ability to
-
-scale, zoom, and link on a map. While our to-do list is long and the
-
-project is not up to full functionality, we believe that we have shown here
-
-not only our ability to impliment a succesfull design for web and mobile
-
-but also have shown that our project has promise to continue in the future.
+While Pioneer Students isn't full functionality (search isn't implimented, and it only works in the US currently), and more work is required to optimize image uploading as well as window resizing of the map. Considering the time frame we have accomplished a lot. We created boiler plate code to create a multi blog platform from a single website. This was then integrated with the addition and removal of points on a world map. This data was then corrilated with user creation and deletion, and those pages were placed behind security measures. We also have the ability to scale, zoom, and link on a map. While our to-do list is long and the project is not up to full functionality, we believe that we have shown here not only our ability to impliment a succesfull design for web and mobile but also have shown that our project has promise to continue in the future.

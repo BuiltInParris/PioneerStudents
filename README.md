@@ -7,50 +7,18 @@ Created and designed by Alex Marion and Stevie Parris.
 
 OBJECTIVES:
 
-Our objective in creating Pioneer Students was to create an intuitive
-
-platform to connect international students on a global level. We aimed to
-
-design a clean user experience which would give international students a
-
-sense of a university from another student's perspective without having to 
-
-travel. This website organizes and connects students from different countries 
-
-to different universities, with the ability to search from a country of 
-
-origin or a destination school. Once the user has found their query, 
-
-they can read distributors blogs and view blog posts and images from their 
-
-peers. 
+Our objective in creating Pioneer Students was to create an intuitive platform to connect international students on a global level. We aimed to design a clean user experience which would give international students a sense of a university from another student's perspective without having to travel. This website organizes and connects students from different countries to different universities, with the ability to search from a country of origin or a destination school. Once the user has found their query, they can read distributors blogs and view blog posts and images from their peers.
 
 IMPLIMENTATION:
 
-Our project was created in NodeJS which is used as a foundation for our
-
-services and libraries. The site is written in jade, java-script, css,
-
-bash, and html. 
-
-To acheive our goals we implimented several different web services,
-
-libraries and API's. Breaking our website into different portions of 
-
-functionality we generated a list of useful services which we implimented
-
-step by step to create functionality in our site.
+Our project was created in NodeJS which is used as a foundation for our services and libraries. The site is written in jade, java-script, css, bash, and html. To acheive our goals we implimented several different web services, libraries and API's. Breaking our website into different portions of functionality we generated a list of useful services which we implimented step by step to create functionality in our site.
 
 Mapping Libraries:
 
-- D3 Maps 
-
+- D3 Maps
 - Natural Earth
-
 - Geospatial Data Abstraction Library (GDAL)
-
 - Topojson
-
 - mapshaper.org
 
 UI:
@@ -60,7 +28,6 @@ UI:
 Security:
 
 - Passport
-
 - Bcrypt
 
 Data and Storage:
